@@ -23,7 +23,7 @@ export const DEFAULT_SETTINGS = {
   measureTypingPerf: false,
   shouldUseLexicalContextMenu: false,
   showNestedEditorTreeView: false,
-  showTableOfContents: false,
+  showTableOfContents: true,
   showTreeView: true,
   tableCellBackgroundColor: true,
   tableCellMerge: true,

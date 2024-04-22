@@ -199,6 +199,29 @@ export function $dfs(
   return nodes;
 }
 
+export function $getPreviousNode(
+  startingNode: LexicalNode,
+): LexicalNode | null {
+  let node: LexicalNode | null = startingNode;
+
+  if ($isElementNode(node) && node.getChildrenSize() > 0) {
+    node = node.getLastChild();
+  } else {
+    let sibling = null;
+
+    while (sibling === null && node !== null) {
+      sibling = node.getPreviousSibling();
+
+      if (sibling === null) {
+        node = node.getParent();
+      } else {
+        node = sibling;
+      }
+    }
+  }
+  return node;
+}
+
 function $getDepth(node: LexicalNode): number {
   let innerNode: LexicalNode | null = node;
   let depth = 0;

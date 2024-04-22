@@ -10,6 +10,7 @@ import type {LexicalEditor, NodeKey, NodeMutation} from 'lexical';
 
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {$isHeadingNode, HeadingNode, HeadingTagType} from '@lexical/rich-text';
+import {$getPreviousNode} from '@lexical/utils';
 import {$getNodeByKey, $getRoot, TextNode} from 'lexical';
 import {useEffect, useState} from 'react';
 
@@ -144,9 +145,9 @@ export default function LexicalTableOfContentsPlugin({
             if (mutation === 'created') {
               const newHeading = $getNodeByKey<HeadingNode>(nodeKey);
               if (newHeading !== null) {
-                let prevHeading = newHeading.getPreviousSibling();
+                let prevHeading = $getPreviousNode(newHeading);
                 while (prevHeading !== null && !$isHeadingNode(prevHeading)) {
-                  prevHeading = prevHeading.getPreviousSibling();
+                  prevHeading = $getPreviousNode(prevHeading);
                 }
                 currentTableOfContents = $insertHeadingIntoTableOfContents(
                   prevHeading,
@@ -162,9 +163,9 @@ export default function LexicalTableOfContentsPlugin({
             } else if (mutation === 'updated') {
               const newHeading = $getNodeByKey<HeadingNode>(nodeKey);
               if (newHeading !== null) {
-                let prevHeading = newHeading.getPreviousSibling();
+                let prevHeading = $getPreviousNode(newHeading);
                 while (prevHeading !== null && !$isHeadingNode(prevHeading)) {
-                  prevHeading = prevHeading.getPreviousSibling();
+                  prevHeading = $getPreviousNode(prevHeading);
                 }
                 currentTableOfContents = $updateHeadingPosition(
                   prevHeading,
